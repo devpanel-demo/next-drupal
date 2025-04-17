@@ -12,6 +12,7 @@
 sudo cp -f $APP_ROOT/.devpanel/000-default.conf /etc/apache2/sites-enabled/000-default.conf
 ## Install NPM
 if ! command -v npm >/dev/null 2>&1; then
+  echo "NPM install"
   sudo apt-get update
   sudo apt-get install -y nano
   sudo a2enmod proxy
@@ -26,6 +27,7 @@ fi
 ## Setup next environment
 cd $APP_ROOT/next
 if [[ ! -z "$DP_HOSTNAME" && ! -f "$APP_ROOT/next/.env" ]]; then
+  echo "Setup next environment"
   cat << EOF > "$APP_ROOT/next/.env"
 NEXT_PUBLIC_DRUPAL_BASE_URL=https://$DP_HOSTNAME/drupal/web
 NEXT_PUBLIC_DRUPAL_BASE_IMAGE=https://$DP_HOSTNAME
@@ -41,5 +43,9 @@ fi
 cd $APP_ROOT/next
 npm install
 if [[ -f "$APP_ROOT/next/.env" ]]; then
+  echo "PM2 start app"
+  sudo chown -R www:www /home/www/.pm2/
+  sudo chown -R www:www $APP_ROOT/next/.next
   pm2 start
+  curl http://localhost:3000
 fi

@@ -16,3 +16,4 @@
 # ----------------------------------------------------------------------
 
 bash $APP_ROOT/.devpanel/re-config.sh
+bash $APP_ROOT/.devpanel/custom_package_installer.sh
