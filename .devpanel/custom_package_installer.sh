@@ -9,6 +9,15 @@
 #
 # ----------------------------------------------------------------------
 
+# Install VSCode Extensions
+if [[ -n "$DP_VSCODE_EXTENSIONS" ]]; then
+    sudo chown -R www:www $APP_ROOT/.vscode/extensions/
+    IFS=','
+    for value in $DP_VSCODE_EXTENSIONS; do
+        code-server --install-extension $value --user-data-dir=$APP_ROOT/.vscode
+    done
+fi
+
 sudo cp -f $APP_ROOT/.devpanel/000-default.conf /etc/apache2/sites-enabled/000-default.conf
 ## Install NPM
 if ! command -v npm >/dev/null 2>&1; then
