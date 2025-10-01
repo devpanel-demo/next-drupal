@@ -1,0 +1,7 @@
+.git
+node_modules
+*.log
+.env
+Dockerfile.dev
+README.md
+tests/
